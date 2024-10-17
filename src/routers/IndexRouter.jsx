@@ -5,19 +5,28 @@ import IndexDashboard from '../components/pages/admin/IndexDashboard'
 import AdminDashboard from '../components/pages/admin/AdminDashboard'
 import EmployeDashboard from '../components/pages/admin/EmployeDashboard'
 import AdminAttendance from '../components/pages/admin/AdminAttandance'
-import PayrollAdminPanel from '../components/layout/PayrollAdminPanel'
+import PayrollAdminPanel from '../components/layout/admin/PayrollAdminPanel'
 import AdminProfile from '../components/pages/admin/AdminProfile'
 import AdminLeave from '../components/pages/admin/AdminLeave'
 import AdminEmployeProfile from '../components/pages/admin/AdminEmployeProfile'
+import EmployeDashboardM from '../components/pages/employe/EmployeDashboardM'
+import EmployeAttendance from '../components/pages/employe/EmployeAttendance'
+import EmployeProfile from '../components/pages/employe/EmployeProfile'
+import EmployeLeave from '../components/pages/employe/EmployeLeave'
+import EmployPayroll from '../components/pages/employe/EmployPayroll'
+import EmplloyeLoginpage from '../components/pages/employe/EmplloyeLoginpage'
+
 
 const IndexRouter = () => {
   return (
     <Routes>
       <Route path='/' element={<IndexDashboard/>}/>
-        <Route path='/login-employee' element/>
+        <Route path='/employee-login' element={<EmplloyeLoginpage/>}/>
         <Route path='/signin-employee' element/>
         <Route path='/admin-login' element={<Loginpage/>}/>
         <Route path='/signin-admin' element/>
+
+        {/* admin routes */}
         <Route path='/admin-dashboard' element={<AdminDashboard/>}/>
         <Route path='/admin-employees' element={<EmployeDashboard/>}/>
         <Route path='/admin-attandance' element={<AdminAttendance/>}/>
@@ -25,6 +34,15 @@ const IndexRouter = () => {
         <Route path='/admin-profile' element={<AdminProfile/>}/>
         <Route path='/admin-leave' element={<AdminLeave/>}/>
         <Route path='/admin-employee-profile' element={<AdminEmployeProfile/>}/>
+
+        {/* employee routes */} 
+        <Route path='/employee-dashboard' element={<EmployeDashboardM/>}/>
+        <Route path='/employee-attendance' element={<EmployeAttendance/>}/>
+        <Route path='/employee-profile' element={<EmployeProfile/>} />
+        <Route path='/employee-leave' element={<EmployeLeave/>}/>
+        <Route path='/employee-payroll' element={<EmployPayroll />} />
+
+
 
         
     </Routes>

@@ -5,11 +5,11 @@ const AdminNavBar = () => {
     const navItems = [
         { name: 'Dashboard', href: '/admin-dashboard', icon: 'ri-dashboard-line' },
         { name: 'Employees', href: '/admin-employees', icon: 'ri-user-line' },
-        { name: 'Company', href: '/admin-company', icon: 'ri-building-line' },
+        // { name: 'Company', href: '/admin-company', icon: 'ri-building-line' },
         { name: 'Attendance', href: '/admin-attandance', icon: 'ri-time-line' },
         { name: 'Leave', href: '/admin-leave', icon: 'ri-plane-line' },
-        { name: 'Review', href: '/admin-review', icon: 'ri-file-list-2-line' },
-        { name: 'Settings', href: '/admin-settings', icon: 'ri-settings-2-line' },
+        // { name: 'Review', href: '/admin-review', icon: 'ri-file-list-2-line' },
+        // { name: 'Settings', href: '/admin-settings', icon: 'ri-settings-2-line' },
         { name: 'Profile', href: '/admin-profile', icon: 'ri-user-3-line' },
       ];
   return (

@@ -1,40 +1,39 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import AdminNavBar from '../../layout/admin/AdminNavBar';
+import React, { useState } from 'react'
+import EmployeeNavBar from '../../layout/Employe/EmployeeNavBar';
 
-const AdminDashboard = () => {
-  const [showMenu, setShowMenu] = useState(false); // Define showMenu state
+
+const EmployeDashboardM = () => {
+    const [showMenu, setShowMenu] =  useState(false); // Define showMenu state
   
-  const stats = [
-    { title: 'Employees', value: '700', bgColor: 'bg-blue-500' },
-    { title: 'Companies', value: '30', bgColor: 'bg-orange-500' },
-    { title: 'Leave', value: '9', bgColor: 'bg-red-500' },
-    { title: 'Salary', value: '$5.8M', bgColor: 'bg-green-500' },
-  ];
-
-  const recentActivities = [
-    { user: 'John Doe', time: '2 hours ago' },
-    { user: 'Jane Smith', time: '3 hours ago' },
-    { user: 'Alice Johnson', time: '4 hours ago' },
-    { user: 'Bob Brown', time: '5 hours ago' },
-  ];
-
-  const upcomingLeaves = [
-    { date: 'Mon, 16 Dec 2021', color: 'bg-red-500' },
-    { date: 'Fri, 20 Dec 2021', color: 'bg-green-500' },
-    { date: 'Wed, 25 Dec 2021', color: 'bg-red-500' },
-    { date: 'Fri, 27 Dec 2021', color: 'bg-green-500' },
-    { date: 'Tue, 31 Dec 2021', color: 'bg-green-500' },
-  ];
+    const stats = [
+      { title: 'Employees', value: '700', bgColor: 'bg-blue-500' },
+      { title: 'Companies', value: '30', bgColor: 'bg-orange-500' },
+      { title: 'Leave', value: '9', bgColor: 'bg-red-500' },
+      { title: 'Salary', value: '$5.8M', bgColor: 'bg-green-500' },
+    ];
+  
+    const recentActivities = [
+      { user: 'John Doe', time: '2 hours ago' },
+      { user: 'Jane Smith', time: '3 hours ago' },
+      { user: 'Alice Johnson', time: '4 hours ago' },
+      { user: 'Bob Brown', time: '5 hours ago' },
+    ];
+  
+    const upcomingLeaves = [
+      { date: 'Mon, 16 Dec 2021', color: 'bg-red-500' },
+      { date: 'Fri, 20 Dec 2021', color: 'bg-green-500' },
+      { date: 'Wed, 25 Dec 2021', color: 'bg-red-500' },
+      { date: 'Fri, 27 Dec 2021', color: 'bg-green-500' },
+      { date: 'Tue, 31 Dec 2021', color: 'bg-green-500' },
+    ];
 
   return (
-    <>
-<div className="flex">
-        <AdminNavBar/>
+    <div className="flex">
+        <EmployeeNavBar/>
 
         <div className="flex-1 p-6 absolute top-0 right-0 w-[85%] bg-gray-50">
           <header className="flex justify-between items-center">
-            <h2 className="text-2xl font-semibold">Welcome Admin</h2>
+            <h2 className="text-2xl font-semibold">Welcome employee name</h2>
             <div className="flex items-center space-x-4">
               <p>Sun, 29 Nov 2019</p>
               <div className="relative">
@@ -59,7 +58,7 @@ const AdminDashboard = () => {
 
           <div className='w-full h-20 flex items-center justify-between px-5 rounded-2xl mt-4 shadow-[0_-4px_10px_-4px_rgba(0,0,0,0.3),0_4px_10px_rgba(0,0,0,0.3)]'>
         <h1 className='text-lg'><i className="ri-home-line"></i> home / Dashboard</h1>
-        <h1>Admin Dashboard</h1>
+        <h1>Employee Dashboard</h1>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-6">
@@ -69,11 +68,6 @@ const AdminDashboard = () => {
             <p className="text-2xl font-bold">{stat.value}</p>
           </div>
         ))}
-      </div>
-
-      <div className="flex space-x-4 mt-4">
-        <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">set Tax</button>
-        <button className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">set location</button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
@@ -145,8 +139,7 @@ const AdminDashboard = () => {
 
 
     
-    </>
-  );
+  )
 }
 
-export default AdminDashboard;
+export default EmployeDashboardM

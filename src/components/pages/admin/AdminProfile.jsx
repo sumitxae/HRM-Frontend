@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Profile from '../../layout/Profile';
 import { NavLink } from 'react-router-dom';
-import AdminNavBar from '../../layout/AdminNavBar';
+import AdminNavBar from '../../layout/admin/AdminNavBar';
 
 const AdminProfile = () => {
     const [showMenu, setShowMenu] = useState(false);

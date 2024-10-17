@@ -1,82 +1,139 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // For navigation after login/register
+import axiosInstance from '../../utils/axios'; // Import axios instance for making HTTP requests
 
-const Login = () => {
-  const [name, setname] = useState('');
-  const [email, setemail] = useState('');
-  const [password, setpassword] = useState('');
-  const [role, setrole] = useState('');
-  const [contact, setcontact] = useState('');
-  const [salary, setsalary] = useState('');
+const Login = ({ title }) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [role, setRole] = useState('employee'); // Default role set to 'employee'
+  const [isRegistering, setIsRegistering] = useState(false); // Toggle between login and registration
 
-  const initialFormData = {
-    name,
-    email,
-    password,
-    role,
-    contact,
-    salary,
+  const navigate = useNavigate(); // To redirect after successful login or register
+
+  // Handle input changes for form fields
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name === 'role' && (value === 'hr' || value === 'employee')) {
+      setRole(value); // Update the role
+    } else {
+      if (name === 'name') setName(value);
+      if (name === 'email') setEmail(value);
+      if (name === 'password') setPassword(value);
+    }
   };
 
-  const [formData, setFormData] = useState(initialFormData);
-  const [isRegistering, setIsRegistering] = useState(false);
+  // Handle form submission for login or registration
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent default form behavior
 
-  const handleChange = ({ target: { name, value } }) => {
-    setFormData(prevData => ({ ...prevData, [name]: value }));
-  };
+    const user = {
+      name,
+      email,
+      password,
+      role: role,
+    }; // Create user object
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
-    // Additional form submission logic can be added here
+    try {
+      const endpoint = isRegistering ? '/auth/register' : '/auth/login'; // Determine endpoint based on action
+      const response = await axiosInstance.post(endpoint, user); // POST request to login/register
+      console.log(user);
+      
+      console.log(response.data); // Log response for debugging
+
+      // Check if the request was successful
+
+      if (response.data.success) {
+        // Optionally, store the token or other data
+        // Example: localStorage.setItem('token', response.data.token);
+
+        // Navigate to the appropriate dashboard based on the user's role
+        if (user.role === 'hr') {
+          navigate('/admin-dashboard'); // Navigate to the admin dashboard for HR
+        } else if (user.role === 'employee') {
+          navigate('/employee-dashboard'); // Navigate to the employee dashboard
+        }
+      } else {
+        alert('Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('Error submitting form. Please try again.');
+    }
   };
 
   return (
-    <div className="h-4/6 w-full flex justify-center p-8 items-center">
+    <div className="h-4/6 w-full flex justify-center p-8 items-center bg-white">
       <form onSubmit={handleSubmit} className="p-8 w-full rounded shadow-lg shadow-gray-500">
-        <h2 className="text-2xl mb-4 text-center">{isRegistering ? 'Registration Form' : 'Login Form'}</h2>
-        {isRegistering && Object.entries(initialFormData).map(([key, value]) => (
-          <div className="" key={key}>
-            <label className="block mb-2">{key.charAt(0).toUpperCase() + key.slice(1)}</label>
+        <h2 className="text-2xl mb-4 text-center capitalize">
+          {isRegistering ? `Registration Form` : `Login Form`}
+        </h2>
+
+        {/* Name field (only show in registration mode) */}
+        {isRegistering && (
+          <div className="">
+            <label className="block mb-2">Name</label>
             <input
-              type={key === 'password' ? 'password' : 'text'}
-              name={key}
-              value={formData[key]}
+              type="text"
+              name="name"
+              value={name}
               onChange={handleChange}
-              className="border p-2 w-full bg-[#A4A1A8]"
-              required={key !== 'contact' && key !== 'salary'}
+              className="border p-2 w-full bg-white"
+              required
             />
           </div>
-        ))}
-        {!isRegistering && (
-          <>
-            <div className="">
-              <label className="block mb-2">Email</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="border p-2 w-full bg-[#A4A1A8]"
-                required
-              />
-            </div>
-            <div className="">
-              <label className="block mb-2">Password</label>
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                className="border p-2 w-full bg-[#A4A1A8]"
-                required
-              />
-            </div>
-          </>
         )}
-        <NavLink to={isRegistering ? '/signin' : '/login'} className="bg-blue-500 mt-4 text-white p-2 rounded">
+
+        {/* Email field */}
+        <div className="">
+          <label className="block mb-2">Email</label>
+          <input
+            type="email"
+            name="email"
+            value={email}
+            onChange={handleChange}
+            className="border p-2 w-full bg-white"
+            required
+          />
+        </div>
+
+        {/* Password field */}
+        <div className="">
+          <label className="block mb-2">Password</label>
+          <input
+            type="password"
+            name="password"
+            value={password}
+            onChange={handleChange}
+            className="border p-2 w-full bg-white"
+            required
+          />
+        </div>
+
+        {/* Role selection dropdown */}
+        <div className="mt-4">
+          <label className="block mb-2">Role</label>
+          <select
+            name="role"
+            value={role}
+            onChange={handleChange}
+            className="border p-2 w-full bg-white"
+            required
+          >
+            <option className=' capitalize' value="employee">Employee</option>
+            <option className=' capitalize' value="hr">Hr</option>
+          </select>
+        </div>
+
+        {/* Submit button */}
+        <button
+          type="submit"
+          className="bg-blue-500 mt-4 text-white p-2 rounded w-full"
+        >
           {isRegistering ? 'Register' : 'Login'}
-        </NavLink>
+        </button>
+
+        {/* Toggle between login and register */}
         <button
           type="button"
           onClick={() => setIsRegistering(!isRegistering)}
@@ -87,6 +144,6 @@ const Login = () => {
       </form>
     </div>
   );
-}
+};
 
 export default Login;

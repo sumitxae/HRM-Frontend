@@ -1,18 +1,16 @@
 import React, { useState } from 'react'
-import Employeee from './Employeee'
-import AdminNavBar from '../../layout/admin/AdminNavBar';
+import EmployeeNavBar from '../../layout/Employe/EmployeeNavBar';
 
-const EmployeDashboard = () => {
-  const [showMenu, setShowMenu] = useState(false); // Define showMenu state
-
-
+const EmployeProfile = () => {
+        
+    const [showMenu, setShowMenu] = useState(false);
   return (
     <div className="flex">
-    <AdminNavBar/>
+    <EmployeeNavBar/>
 
     <div className="flex-1 p-6 absolute top-0 right-0 w-[85%] bg-gray-50">
       <header className="flex justify-between items-center">
-        <h2 className="text-2xl font-semibold">Welcome Admin</h2>
+        <h2 className="text-2xl font-semibold">Welcome employee name</h2>
         <div className="flex items-center space-x-4">
           <p>Sun, 29 Nov 2019</p>
           <div className="relative">
@@ -35,7 +33,10 @@ const EmployeDashboard = () => {
         </div>
       </header>
 
-    <Employeee/>
+    
+
+
+
     
 
     </div>
@@ -43,4 +44,4 @@ const EmployeDashboard = () => {
   )
 }
 
-export default EmployeDashboard
+export default EmployeProfile

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 
-function EmployeeDetails({ employee = {}, onProvideBenefits }) {
+function EmployeeDetails({ employee = {} }) {
     
   const [visibleSections, setVisibleSections] = useState({
     performance: false,
@@ -8,6 +8,7 @@ function EmployeeDetails({ employee = {}, onProvideBenefits }) {
     attendance: false,
     leaveRecords: false,
     goals: false,
+    benefits: false, // Added benefits section visibility
   });
 
   const fileInputRef = useRef(null); // Reference for the file input
@@ -164,6 +165,18 @@ function EmployeeDetails({ employee = {}, onProvideBenefits }) {
       headers: ['Title', 'Description', 'Status'],
       section: 'goals',
     },
+    {
+      title: 'Benefits',
+      data: [
+        {
+          healthInsurance: employee.healthInsurance ? 'Yes' : 'No',
+          retirementPlan: employee.retirementPlan ? 'Yes' : 'No',
+          enrollmentDate: employee.enrollmentDate ? new Date(employee.enrollmentDate).toLocaleDateString() : 'N/A',
+        }
+      ],
+      headers: ['Health Insurance', 'Retirement Plan', 'Enrollment Date'],
+      section: 'benefits',
+    },
   ];
 
   return (
@@ -183,12 +196,6 @@ function EmployeeDetails({ employee = {}, onProvideBenefits }) {
             <p><strong>Overtime Hours:</strong> {employee.overtimeHours || 'N/A'}</p>
           </div>
         </div>
-        <button
-          onClick={() => onProvideBenefits(employee._id)}
-          className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
-        >
-          Provide Benefits
-        </button>
       </div>
 
       {/* Sections */}

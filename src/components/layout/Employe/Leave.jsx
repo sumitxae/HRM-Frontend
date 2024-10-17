@@ -6,7 +6,7 @@ const Leave = () => {
   const [halfDay, setHalfDay] = useState('');
   const [fromDate, setFromDate] = useState('');
   const [reason, setReason] = useState(''); // Added state for reason
-  console.log(leaveType);
+  // console.log(leaveType);
   
 
   return (

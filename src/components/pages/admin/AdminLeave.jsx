@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom'
-import LeaveRequestsAdmin from '../../layout/LeaveRequestsAdmin';
-import AdminNavBar from '../../layout/AdminNavBar';
+import LeaveRequestsAdmin from '../../layout/admin/LeaveRequestsAdmin';
+import AdminNavBar from '../../layout/admin/AdminNavBar';
 
 const AdminLeave = () => {
     const [showMenu, setShowMenu] = useState(false);
-    // Define showMenu state
 
   return (
     <div className="flex">
