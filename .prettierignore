@@ -1,0 +1,39 @@
+# Ignore build output directories
+.vscode
+dist/
+build/
+
+# Ignore node_modules (usually ignored by default)
+node_modules/
+
+# Ignore Vite config output
+.vite/
+
+# Ignore configuration files and lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+*.log
+
+# Ignore environment files
+.env
+.env.local
+.env.*.local
+.env.*
+
+# Ignore Tailwind config files
+tailwind.config.js
+postcss.config.js
+
+# Ignore any files related to Git
+.git/
+
+# Ignore static assets
+public/
+assets/
+
+# Ignore formatted files such as JSON, SVG, etc. (if you don’t want them formatted)
+*.svg
+*.json
+*.yml
+*.yaml
