@@ -1,15 +1,9 @@
 import React, { useState } from 'react';
+import EmployeDashboardM from '../pages/employe/EmployeDashboardM';
+import { useSelector } from 'react-redux';
 
 const Profile = () => {
-  const [userInfo, setUserInfo] = useState({
-    username: 'JohnDoe',
-    email: 'johndoe@example.com',
-    password: '********',
-    role: 'Employee',
-    contact: '123-456-7890',
-    leaveInfo: '10 days remaining',
-    payroll: '$3000/month',
-  });
+  const employee = useSelector(state => state.auth.employee); 
 
   return (
     <div className="w-full h-full flex items-center justify-center mt-8">
@@ -26,10 +20,10 @@ const Profile = () => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2">Username</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">{employee.user.name}</label>
           <input 
             type="text" 
-            value={userInfo.username} 
+            value={employee.user.name} 
             readOnly 
             className="block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
           />
@@ -39,7 +33,7 @@ const Profile = () => {
           <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
           <input 
             type="email" 
-            value={userInfo.email} 
+            value={employee.user.email} 
             readOnly 
             className="block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
           />
@@ -49,7 +43,7 @@ const Profile = () => {
           <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
           <input 
             type="password" 
-            value={userInfo.password} 
+            value={employee.user.password} 
             readOnly 
             className="block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
           />
@@ -59,7 +53,7 @@ const Profile = () => {
           <label className="block text-sm font-medium text-gray-700 mb-2">Role</label>
           <input 
             type="text" 
-            value={userInfo.role} 
+            value={employee.department} 
             readOnly 
             className="block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
           />
@@ -69,7 +63,7 @@ const Profile = () => {
           <label className="block text-sm font-medium text-gray-700 mb-2">Contact</label>
           <input 
             type="text" 
-            value={userInfo.contact} 
+            // value={userInfo.contact} 
             readOnly 
             className="block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
           />
@@ -79,7 +73,7 @@ const Profile = () => {
           <label className="block text-sm font-medium text-gray-700 mb-2">Leave Information</label>
           <input 
             type="text" 
-            value={userInfo.leaveInfo} 
+            // value={userInfo.leaveInfo} 
             readOnly 
             className="block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
           />
@@ -89,7 +83,7 @@ const Profile = () => {
           <label className="block text-sm font-medium text-gray-700 mb-2">Payroll</label>
           <input 
             type="text" 
-            value={userInfo.payroll} 
+            // value={userInfo.payroll} 
             readOnly 
             className="block w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" 
           />

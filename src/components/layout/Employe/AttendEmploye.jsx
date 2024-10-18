@@ -110,7 +110,6 @@ const AttendEmploye = () => {
                 </td>
               </tr>
   
-              {/* Add more employees here */}
             </tbody>
           </table>
         </div>

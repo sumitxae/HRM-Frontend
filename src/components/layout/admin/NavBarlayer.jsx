@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom';
+import { logout } from '../../../store/authSlice';
+import { useDispatch } from 'react-redux';
 
 const NavBarlayer = () => {
   const [showMenu, setShowMenu] = useState(false);
    // Define showMenu state
+   const dispatch = useDispatch(); //
   
   const navItems = [
     { name: 'Dashboard', href: '/dashboard', icon: 'ri-dashboard-line' },
@@ -54,7 +57,7 @@ const NavBarlayer = () => {
                     <ul className="py-1">
                       <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Profile</li>
                       <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Settings</li>
-                      <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Logout</li>
+                      <li onClick={() =>dispatch(logout())} className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Logout</li>
                     </ul>
                   </div>
                 )}

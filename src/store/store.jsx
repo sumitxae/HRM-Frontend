@@ -1,7 +1,22 @@
 import { configureStore } from '@reduxjs/toolkit';
-import counterSlice from './reducers/counterSlice';
+import performanceReducer from './performanceSlice';
+import payrollReducer from './payrollSlice';
+import attendanceReducer from './attendanceSlice';
+import documentReducer from './documentSlice';
+import employeeReducer from './employeeSlice';
+import authreducer from './authSlice';
+import leaveReducer from './leaveSlice';
 
+const store = configureStore({
+  reducer: {
+    auth: authreducer,
+    employee: employeeReducer,
+    document: documentReducer,
+    attendance: attendanceReducer,
+    payroll: payrollReducer,
+    performance: performanceReducer,
+    leave: leaveReducer,
+  },
+});
 
-export const store = configureStore({
-    reducer:{counterSlice}
-})
+export default store;

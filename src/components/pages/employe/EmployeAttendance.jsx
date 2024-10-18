@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import EmployeeNavBar from '../../layout/Employe/EmployeeNavBar';
 import AttendEmploye from '../../layout/Employe/AttendEmploye';
+import { useSelector } from 'react-redux';
 
 const EmployeAttendance = () => {
     const [showMenu, setShowMenu] = useState(false);
-    const employee = { id: 'EMP001', name: 'John Doe' }; // Single employee
+    const employee = useSelector(state => state.auth.employee);
 
     return (
         <div className="flex">
@@ -33,9 +34,6 @@ const EmployeAttendance = () => {
                         </div>
                     </div>
                 </header>
-
-
-                {/* Attendance Records Table */}
                 <AttendEmploye/>
                 
             </div>

@@ -1,10 +1,13 @@
 import React,{useState} from 'react'
 import AdminDashboard from '../AdminDashboard'
 import NavBarlayer from '../../layout/NavBarlayer'
+import { logout } from '../../../store/authSlice';
+import { useDispatch } from 'react-redux';
 
 const Admin = () => {
   
      const [showMenu, setShowMenu] = useState(false);
+     const dispatch = useDispatch();
 
      const navItems = [
       { name: 'Dashboard', href: '/dashboard', icon: 'ri-dashboard-line' },
@@ -56,7 +59,7 @@ return (
             <ul className="py-1">
               <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Profile</li>
               <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Settings</li>
-              <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Logout</li>
+              <li onClick={() => dispatch(logout())} className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Logout</li>
             </ul>
           </div>
         )}

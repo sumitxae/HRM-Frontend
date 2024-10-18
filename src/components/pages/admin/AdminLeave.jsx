@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import LeaveRequestsAdmin from '../../layout/admin/LeaveRequestsAdmin';
 import AdminNavBar from '../../layout/admin/AdminNavBar';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../../store/authSlice';
 
 const AdminLeave = () => {
-    const [showMenu, setShowMenu] = useState(false);
-
+  const [showMenu, setShowMenu] = useState(false);
+    const dispatch = useDispatch();
+ 
   return (
     <div className="flex">
         <AdminNavBar/>
@@ -26,7 +29,7 @@ const AdminLeave = () => {
                     <ul className="py-1">
                       <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Profile</li>
                       <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Settings</li>
-                      <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Logout</li>
+                      <li onClick={() => dispatch(logout())} className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Logout</li>
                     </ul>
                   </div>
                 )}

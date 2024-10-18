@@ -1,14 +1,44 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import AdminNavBar from '../../layout/admin/AdminNavBar';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../../store/authSlice';
 
 const AdminAttendance = () => {
     const [showMenu, setShowMenu] = useState(false);
-    const [attendance, setAttendance] = useState({
-        'John Doe': true,
-        'Jane Smith': false,
-        'Samuel Green': false,
+    
+    
+    const dispatch = useDispatch();
+    
+    
+    const employees = useSelector(state => state.employee.employees);
+
+    const today = new Date().toISOString().split('T')[0];
+
+    const unSortedAttendance = employees.map(employee => {
+        
+        const todayAttendance = employee.attendanceRecords.find(record => {
+            const checkInTime = new Date(record.checkInTime); 
+            return checkInTime.toISOString().split('T')[0] === today; 
+        });
+
+        
+        const hasAttendanceToday = !!todayAttendance;
+
+        return {
+            id: employee._id, 
+            name: employee.user.name,
+            hasAttendanceToday: hasAttendanceToday,
+            checkInTime: hasAttendanceToday ? todayAttendance.checkInTime : null,
+            checkOutTime: hasAttendanceToday ? todayAttendance.checkOutTime : null,
+            overtimeHours: hasAttendanceToday ? todayAttendance.overtimeHours : 0,
+        };
     });
+
+    const attendance = unSortedAttendance.sort((a, b) => {
+        return b.hasAttendanceToday - a.hasAttendanceToday;
+    });
+
 
     const handleAttendanceChange = (employee) => {
         setAttendance(prev => ({ ...prev, [employee]: !prev[employee] }));
@@ -16,7 +46,7 @@ const AdminAttendance = () => {
 
     return (
         <div className="flex">
-            <AdminNavBar/>
+            <AdminNavBar />
 
             <div className="flex-1 p-6 absolute top-0 right-0 w-[85%] bg-gray-50">
                 <header className="flex justify-between items-center">
@@ -35,7 +65,7 @@ const AdminAttendance = () => {
                                     <ul className="py-1">
                                         <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Profile</li>
                                         <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Settings</li>
-                                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Logout</li>
+                                        <li onClick={() => dispatch(logout())} className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Logout</li>
                                     </ul>
                                 </div>
                             )}
@@ -64,17 +94,17 @@ const AdminAttendance = () => {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-200">
-                                {Object.keys(attendance).map((employee) => (
-                                    <tr key={employee}>
-                                        <td className="p-4 text-gray-800">{employee}</td>
-                                        <td className="p-4 text-gray-800">-</td>
-                                        <td className="p-4 text-gray-800">-</td>
-                                        <td className="p-4 text-gray-800">-</td>
-                                        <td className="p-4 text-blue-500 hover:underline"><a href="#">View Leave Records</a></td>
+                                {attendance.map((record, index) => index < 7 && (
+                                    <tr key={index}>
+                                        <td className="p-4 text-gray-800">{record.name}</td>
+                                        <td className="p-4 text-gray-800">{record.checkInTime}</td>
+                                        <td className="p-4 text-gray-800">{record.checkOutTime}</td>
+                                        <td className="p-4 text-gray-800">{record.overtimeHours}</td>
+                                        <td className="p-4 text-blue-500 hover:underline"><Link to={`/admin-employee-profile/${record.id}`}  >View Leave Records</Link></td>
                                         <td className="p-4 text-gray-600">-</td>
                                         <td className="p-4">
-                                            <span className={attendance[employee] ? "text-white bg-green-400 p-1 rounded-md" : "text-white bg-red-400 p-1 rounded-md"}>
-                                                {attendance[employee] ? "Present" : "Absent"}
+                                            <span className={record.hasAttendanceToday ? "text-white bg-green-400 p-1 rounded-md" : "text-white bg-red-400 p-1 rounded-md"}>
+                                                {record.hasAttendanceToday ? "Present" : "Absent"}
                                             </span>
                                         </td>
                                     </tr>
@@ -82,42 +112,6 @@ const AdminAttendance = () => {
                             </tbody>
                         </table>
                     </div>
-                </div>
-
-                {/* Added Payroll Form Section */}
-                <div className="w-full mt-8">
-                    <h2 className="text-2xl font-semibold mb-4">Payroll Form</h2>
-                    <form className="bg-white p-6 rounded-lg shadow-md">
-                        {/* Add your form fields here */}
-                        <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="employeeName">
-                                Employee Name
-                            </label>
-                            <input
-                                type="text"
-                                id="employeeName"
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                placeholder="Enter employee name"
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="salary">
-                                Salary
-                            </label>
-                            <input
-                                type="number"
-                                id="salary"
-                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                placeholder="Enter salary"
-                            />
-                        </div>
-                        <button
-                            type="submit"
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                        >
-                            Submit
-                        </button>
-                    </form>
                 </div>
             </div>
         </div>

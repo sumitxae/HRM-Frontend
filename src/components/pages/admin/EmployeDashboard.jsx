@@ -1,45 +1,51 @@
 import React, { useState } from 'react'
 import Employeee from './Employeee'
 import AdminNavBar from '../../layout/admin/AdminNavBar';
+import moment from 'moment';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux'
+import { logout } from '../../../store/authSlice';
+
 
 const EmployeDashboard = () => {
   const [showMenu, setShowMenu] = useState(false); // Define showMenu state
-
+  const admin = useSelector((state) => state.auth.employee);
+  const dispatch = useDispatch(); // Define dispatch variable
 
   return (
     <div className="flex">
-    <AdminNavBar/>
+      <AdminNavBar />
 
-    <div className="flex-1 p-6 absolute top-0 right-0 w-[85%] bg-gray-50">
-      <header className="flex justify-between items-center">
-        <h2 className="text-2xl font-semibold">Welcome Admin</h2>
-        <div className="flex items-center space-x-4">
-          <p>Sun, 29 Nov 2019</p>
-          <div className="relative">
-            <img 
-              src="https://via.placeholder.com/40" 
-              alt="User" 
-              className="rounded-full cursor-pointer" 
-              onClick={() => setShowMenu(!showMenu)} 
-            />
-            {showMenu && (
-              <div className="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-10">
-                <ul className="py-1">
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Profile</li>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Settings</li>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Logout</li>
-                </ul>
-              </div>
-            )}
+      <div className="flex-1 p-6 absolute top-0 right-0 w-[85%] bg-gray-50">
+        <header className="flex justify-between items-center">
+          <h2 className="text-2xl font-semibold">Welcome {admin.user.name}</h2>
+          <div className="flex items-center space-x-4">
+            <p>{moment(Date.now()).format("ddd, MMM DD, YYYY")}</p>
+            <div className="relative">
+              <img
+                src="https://via.placeholder.com/40"
+                alt="User"
+                className="rounded-full cursor-pointer"
+                onClick={() => setShowMenu(!showMenu)}
+              />
+              {showMenu && (
+                <div className="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-10">
+                  <ul className="py-1">
+                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Profile</li>
+                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Settings</li>
+                    <li onClick={() => dispatch(logout())} className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Logout</li>
+                  </ul>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      </header>
+        </header>
 
-    <Employeee/>
-    
+        <Employeee />
 
+
+      </div>
     </div>
-  </div>
   )
 }
 

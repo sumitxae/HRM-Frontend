@@ -1,97 +1,90 @@
-import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import { NavLink } from 'react-router-dom'
 
-import PayrollForm from './PayrollForm';
-import PayrollTable from './PayrollTable';
-import AdminNavBar from './AdminNavBar';
+import PayrollForm from './PayrollForm'
+import PayrollTable from './PayrollTable'
+import AdminNavBar from './AdminNavBar'
+import { logout } from '../../../store/authSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchPayrollRecords } from '../../../store/payrollSlice'
+import { updateEmployee } from '../../../store/employeeSlice'
 // import axios from 'axios';
 
 function PayrollAdminPanel() {
-    const [showMenu, setShowMenu] = useState(false);
-    // Define showMenu state
-   
-  
-  const [payrolls, setPayrolls] = useState([]);
-  const [selectedPayroll, setSelectedPayroll] = useState(null);
+  const [showMenu, setShowMenu] = useState(false)
+  const dispatch = useDispatch()
+  const payroll = useSelector(state => state.payroll.records) || []
+  // console.log(payroll)
+  const payrolls = payroll.reduce((acc, record) => {
+    const id = record.employee._id
+    if (!acc.some(payroll => payroll.employee?._id === id)) {
+      acc.push(record)
+    }
+    return acc
+  }, [])
 
   useEffect(() => {
-    fetchPayrolls();
-  }, []);
+    dispatch(fetchPayrollRecords())
+  }, [])
 
-  const fetchPayrolls = async () => {
-    const response = await axios.get('/api/payrolls');
-    setPayrolls(response.data);
-  };
-
-  const addPayroll = async (payrollData) => {
-    await axios.post('/api/payrolls', payrollData);
-    fetchPayrolls();
-  };
-
-  const updatePayroll = async (payrollData) => {
-    await axios.put(`/api/payrolls/${selectedPayroll._id}`, payrollData);
-    setSelectedPayroll(null);
-    fetchPayrolls();
-  };
-
-  const deletePayroll = async (payrollId) => {
-    await axios.delete(`/api/payrolls/${payrollId}`);
-    fetchPayrolls();
-  };
-
-  const handleEdit = (payroll) => {
-    setSelectedPayroll(payroll);
-  };
+  
+  const handleEdit = (employee, hourlyRate) => {
+    console.log(employee, hourlyRate)
+    dispatch(updateEmployee({ ...employee, hourlyRate }))
+  }
 
   return (
-<div className="flex">
-        <AdminNavBar/>
+    <div className='flex'>
+      <AdminNavBar />
 
-        <div className="flex-1 p-6 absolute top-0 right-0 w-[85%] bg-gray-50">
-          <header className="flex justify-between items-center">
-            <h2 className="text-2xl font-semibold">Welcome Admin</h2>
-            <div className="flex items-center space-x-4">
-              <p>Sun, 29 Nov 2019</p>
-              <div className="relative">
-                <img 
-                  src="https://via.placeholder.com/40" 
-                  alt="User" 
-                  className="rounded-full cursor-pointer" 
-                  onClick={() => setShowMenu(!showMenu)} 
-                />
-                {showMenu && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white border rounded-md shadow-lg z-10">
-                    <ul className="py-1">
-                      <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Profile</li>
-                      <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Settings</li>
-                      <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Logout</li>
-                    </ul>
-                  </div>
-                )}
-              </div>
+      <div className='absolute right-0 top-0 w-[85%] flex-1 bg-gray-50 p-6'>
+        <header className='flex items-center justify-between'>
+          <h2 className='text-2xl font-semibold'>Welcome Admin</h2>
+          <div className='flex items-center space-x-4'>
+            <p>Sun, 29 Nov 2019</p>
+            <div className='relative'>
+              <img
+                src='https://via.placeholder.com/40'
+                alt='User'
+                className='cursor-pointer rounded-full'
+                onClick={() => setShowMenu(!showMenu)}
+              />
+              {showMenu && (
+                <div className='absolute right-0 z-10 mt-2 w-48 rounded-md border bg-white shadow-lg'>
+                  <ul className='py-1'>
+                    <li className='cursor-pointer px-4 py-2 hover:bg-gray-100'>
+                      Profile
+                    </li>
+                    <li className='cursor-pointer px-4 py-2 hover:bg-gray-100'>
+                      Settings
+                    </li>
+                    <li
+                      onClick={() => dispatch(logout())}
+                      className='cursor-pointer px-4 py-2 hover:bg-gray-100'
+                    >
+                      Logout
+                    </li>
+                  </ul>
+                </div>
+              )}
             </div>
-          </header>
+          </div>
+        </header>
 
-       
-        <div className="p-8 bg-gray-100 min-h-screen">
-      <PayrollForm
+        <div className='min-h-screen bg-gray-100 p-8'>
+          {/* <PayrollForm
         addPayroll={addPayroll}
         selectedPayroll={selectedPayroll}
         updatePayroll={updatePayroll}
-      />
-      <PayrollTable
-        payrolls={payrolls}
-        onEdit={handleEdit}
-        onDelete={deletePayroll}
-      />
-    </div>
-        
-
+      /> */}
+          <PayrollTable
+            payrolls={payrolls}
+            onEdit={handleEdit}
+          />
         </div>
       </div>
-
-    
-  );
+    </div>
+  )
 }
 
-export default PayrollAdminPanel;
+export default PayrollAdminPanel

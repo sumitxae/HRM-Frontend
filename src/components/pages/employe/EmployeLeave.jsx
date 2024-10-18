@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import EmployeeNavBar from '../../layout/Employe/EmployeeNavBar';
 import Leave from '../../layout/Employe/Leave';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../../store/authSlice';
 
 const EmployeLeave = () => {
     const [showMenu, setShowMenu] = useState(false);
-    
+    const dispatch = useDispatch();
     // Sample leave data
     const leaveData = [
         { id: 'LEAVE001', type: 'Sick Leave', status: 'Approved', date: '2023-10-01' },
@@ -33,7 +35,7 @@ const EmployeLeave = () => {
                                     <ul className="py-1">
                                         <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Profile</li>
                                         <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Settings</li>
-                                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Logout</li>
+                                        <li onClick={() => dispatch(logout())} className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Logout</li>
                                     </ul>
                                 </div>
                             )}

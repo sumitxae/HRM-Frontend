@@ -2,10 +2,12 @@ import React, { useState } from 'react'
 import Profile from '../../layout/Profile';
 import { NavLink } from 'react-router-dom';
 import AdminNavBar from '../../layout/admin/AdminNavBar';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../../store/authSlice';
 
 const AdminProfile = () => {
     const [showMenu, setShowMenu] = useState(false);
-    // Define showMenu state
+    const dispatch = useDispatch()
  
   return (
     <div className="flex">
@@ -28,7 +30,7 @@ const AdminProfile = () => {
                     <ul className="py-1">
                       <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Profile</li>
                       <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Settings</li>
-                      <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Logout</li>
+                      <li onClick={() => dispatch(logout())} className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Logout</li>
                     </ul>
                   </div>
                 )}
